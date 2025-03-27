@@ -1,0 +1,25 @@
+version: "3"
+
+
+services:
+  todo_backend:
+    build: .
+    hostname: todo_backend
+    ports:
+      - "8001:8001"
+    depends_on:
+      - postgres
+    env_file:
+    - ./.envs/.postgres
+    environment:
+    - POSTGRES_HOST=postgres
+    - DJANGO_SETTINGS_MODULE=todo_backend.settings.prod
+  postgres:
+    image: postgres:17.4
+    hostname: postgres
+    ports:
+      - "15432:5432"
+    env_file:
+    - ./.envs/.postgres
+    environment: 
+    - POSTGRES_HOST=postgres
